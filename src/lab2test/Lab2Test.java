@@ -18,6 +18,8 @@ public class Lab2Test {
     System.out.print("I am Lames");
     System.out.println("I am Leena");
     System.out.println("I am Joud");
+    System.out.println("I am Aryam");
+
     }
     
 }

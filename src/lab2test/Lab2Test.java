@@ -17,6 +17,7 @@ public class Lab2Test {
     public static void main(String[] args) {
     System.out.print("I am Lames");
     System.out.println("I am Leena");
+    System.out.println("I am Joud");
     }
     
 }

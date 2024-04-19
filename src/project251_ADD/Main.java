@@ -9,7 +9,7 @@ package project251_ADD;
  *
  * @author DeLL
  */
-public class Lab2Test {
+public class Main {
 
     /**
      * @param args the command line arguments

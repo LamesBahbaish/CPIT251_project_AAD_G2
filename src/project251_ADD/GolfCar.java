@@ -21,6 +21,13 @@ public class GolfCar {
         this.Time = Time;
         this.waitList = waitList;
     }
+    
+    public GolfCar(int Golf_Number, int seats, String Location, String Time) {
+        this.Golf_Number = Golf_Number;
+        this.seats = seats;
+        this.Location = Location;
+        this.Time = Time;
+    }
 
     public int getGolf_Number() {
         return Golf_Number;

@@ -6,16 +6,33 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        ArrayList<GolfCar> GolfCars = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
-        GolfCar golfCar1 = new GolfCar(1, 6, "Gate3", "10:00 AM");
-        GolfCars.add(golfCar1);
-        GolfCar golfCar2 = new GolfCar(2, 6, "Gate1", "8:00 AM");
+        System.out.print("Enter student ID: "); 
+        int studentId = scanner.nextInt(); 
+        scanner.nextLine(); // Consume the remaining newline
+
+        System.out.print("Enter student name: "); 
+        String studentName = scanner.nextLine(); 
+        Student student = new Student(studentId, studentName); // Create a Student object with user input
+
+        System.out.println("Hello " + student.getName() + "!");
+        
+        ArrayList<GolfCar> GolfCars = new ArrayList<>(); // Creating an ArrayList to store GolfCar objects
+        // Creating and adding golf cars with specific attributes 
+        GolfCar golfCar1 = new GolfCar(1, 6, "Gate1", "8:00 AM"); // Create a golf car object
+        GolfCars.add(golfCar1); // Add the golf car to the ArrayList
+        GolfCar golfCar2 = new GolfCar(2, 4, "Gate2", "9:00 AM"); 
         GolfCars.add(golfCar2);
+        GolfCar golfCar3 = new GolfCar(3, 6, "Gate3", "10:00 AM"); 
+        GolfCars.add(golfCar3);
+        GolfCar golfCar4 = new GolfCar(4, 8, "Gate4", "11:00 AM"); 
+        GolfCars.add(golfCar4);
+        GolfCar golfCar5 = new GolfCar(5, 6, "Gate5", "12:00 PM"); 
+        GolfCars.add(golfCar5);
 
         int choice = 0;
         do {
-            System.out.println("--------Welcome in Golf car KAU--------");
+            System.out.println("--------Welcome to Golf car KAU--------");
             PrintSchedule(GolfCars);
             System.out.print("Enter:");
             choice = scanner.nextInt();

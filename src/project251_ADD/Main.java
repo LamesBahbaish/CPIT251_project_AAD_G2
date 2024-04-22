@@ -8,11 +8,11 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter student ID: "); 
-        int studentId = scanner.nextInt(); 
+        int studentId = scanner.nextInt(); // Read student ID from input
         scanner.nextLine(); // Consume the remaining newline
 
         System.out.print("Enter student name: "); 
-        String studentName = scanner.nextLine(); 
+        String studentName = scanner.nextLine(); // Read student name from input
         Student student = new Student(studentId, studentName); // Create a Student object with user input
 
         System.out.println("Hello " + student.getName() + "!");

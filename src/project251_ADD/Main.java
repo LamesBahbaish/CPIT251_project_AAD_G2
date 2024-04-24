@@ -30,28 +30,103 @@ public class Main {
         GolfCar golfCar5 = new GolfCar(5, 6, "Gate5", "12:00 PM"); 
         GolfCars.add(golfCar5);
 
-        int choice = 0;
+        ArrayList<Reservation> reservations = new ArrayList<>();
+
+        int choice;
         do {
             System.out.println("--------Welcome to Golf car KAU--------");
             PrintSchedule(GolfCars);
-            System.out.print("Enter:");
+            System.out.print("Enter choice: ");
             choice = scanner.nextInt();
             switch (choice) {
                 case 1:
-                    System.out.println("Make a reservation");
+                    // Make a reservation
+                    System.out.println("Making a reservation...");
+                    System.out.print("Enter golf car number: ");
+                    int golfCarNum = scanner.nextInt();
+                    System.out.print("Enter seat number: ");
+                    int seatNum = scanner.nextInt();
+
+                    GolfCar selectedCar = null;
+                    for (GolfCar car : GolfCars) {
+                        if (car.getGolf_Number() == golfCarNum) {
+                            selectedCar = car;
+                            break;
+                        }
+                    }
+
+                    if (selectedCar != null) {
+                        Reservation reservation = new Reservation(golfCarNum, seatNum, student);
+                        if (reservation.createReservation(golfCarNum, seatNum, student, selectedCar.getSeats())) {
+                            reservations.add(reservation);
+                        }
+                    } else {
+                        System.out.println("No golf car with the entered number exists. Please try again.");
+                    }
                     break;
                 case 2:
-                    System.out.println("Delete my reservation");
+                    // Delete my reservation
+                    System.out.println("Deleting a reservation...");
+                    System.out.print("Enter reservation number to cancel: ");
+                    int reservationNumToCancel = scanner.nextInt();
+                    boolean found = false;
+                    for (int i = 0; i < reservations.size(); i++) {
+                        if (reservations.get(i).getReservationNum() == reservationNumToCancel) {
+                            reservations.get(i).cancelReservation(reservationNumToCancel);
+                            System.out.println("Reservation cancelled.");
+                            reservations.remove(i); // Remove the reservation from the list
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        System.out.println("No reservation with the given number exists. Please try again.");
+                    }
                     break;
                 case 3:
-                    System.out.println("Modify my reservation");
+                    // Modify my reservation
+                    System.out.println("Modifying a reservation...");
+                    System.out.print("Enter reservation number to modify: ");
+                    int modifyNum = scanner.nextInt();
+                    System.out.print("Enter new seat number: ");
+                    int newSeatNum = scanner.nextInt();
+
+                    boolean reservationFound = false;
+                    for (Reservation res : reservations) {
+                        if (res.getReservationNum() == modifyNum) {
+                            reservationFound = true;
+                            GolfCar carToModify = null;
+                            for (GolfCar car : GolfCars) {
+                                if (car.getGolf_Number() == res.getGolfCarNum()) {
+                                    carToModify = car;
+                                    break;
+                                }
+                            }
+
+                            if (carToModify != null && res.modifySeat(res.getGolfCarNum(), newSeatNum, carToModify.getSeats())) {
+                                System.out.println("Reservation modified.");
+                            } else {
+                                System.out.println("Modification failed. The seat number is invalid.");
+                            }
+                            break;
+                        }
+                    }
+                    if (!reservationFound) {
+                        System.out.println("No reservation with the given number exists. Please try again.");
+                    }
                     break;
+
                 case 4:
-                    System.out.println("Thanks");
+                    // Exit
+                    System.out.println("Thank you for using Golf car KAU. Goodbye!");
+                    break;
+                default:
+                    System.out.println("Invalid option. Please try again.");
                     break;
             }
 
         } while (choice != 4);
+
 
     }
 

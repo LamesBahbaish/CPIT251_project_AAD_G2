@@ -14,14 +14,6 @@ public class GolfCar {
     private String Time;
     private ArrayList<String> waitList;
 
-    public GolfCar(int Golf_Number, int seats, String Location, String Time, ArrayList<String> waitList) {
-        this.Golf_Number = Golf_Number;
-        this.seats = seats;
-        this.Location = Location;
-        this.Time = Time;
-        this.waitList = waitList;
-    }
-    
     public GolfCar(int Golf_Number, int seats, String Location, String Time) {
         this.Golf_Number = Golf_Number;
         this.seats = seats;
@@ -37,6 +29,10 @@ public class GolfCar {
         return seats;
     }
 
+    public void SetSeats(int num) {
+        seats = num;
+    }
+
     public String getLocation() {
         return Location;
     }
@@ -45,8 +41,20 @@ public class GolfCar {
         return Time;
     }
 
+    public void addToWaitList(String name) {
+        waitList.add(name);
+    }
+
     public ArrayList<String> getWaitList() {
         return waitList;
+    }
+
+    public void updateSeat(int num) {
+        seats = seats - num;
+    }
+
+    public void addSeat(int num) {
+        seats = seats + num;
     }
 
 }

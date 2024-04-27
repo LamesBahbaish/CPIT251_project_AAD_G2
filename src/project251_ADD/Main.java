@@ -7,27 +7,27 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter student ID: "); 
+        System.out.print("Enter student ID: ");
         int studentId = scanner.nextInt(); // Read student ID from input
         scanner.nextLine(); // Consume the remaining newline
 
-        System.out.print("Enter student name: "); 
+        System.out.print("Enter student name: ");
         String studentName = scanner.nextLine(); // Read student name from input
         Student student = new Student(studentId, studentName); // Create a Student object with user input
 
         System.out.println("Hello " + student.getName() + "!");
-        
+
         ArrayList<GolfCar> GolfCars = new ArrayList<>(); // Creating an ArrayList to store GolfCar objects
         // Creating and adding golf cars with specific attributes 
-        GolfCar golfCar1 = new GolfCar(1, 6, "Gate1", "8:00 AM"); // Create a golf car object
+        GolfCar golfCar1 = new GolfCar(1, 0, "Gate1", "8:00 AM"); // Create a golf car object
         GolfCars.add(golfCar1); // Add the golf car to the ArrayList
-        GolfCar golfCar2 = new GolfCar(2, 4, "Gate2", "9:00 AM"); 
+        GolfCar golfCar2 = new GolfCar(2, 4, "Gate2", "9:00 AM");
         GolfCars.add(golfCar2);
-        GolfCar golfCar3 = new GolfCar(3, 6, "Gate3", "10:00 AM"); 
+        GolfCar golfCar3 = new GolfCar(3, 6, "Gate3", "10:00 AM");
         GolfCars.add(golfCar3);
-        GolfCar golfCar4 = new GolfCar(4, 8, "Gate4", "11:00 AM"); 
+        GolfCar golfCar4 = new GolfCar(4, 8, "Gate4", "11:00 AM");
         GolfCars.add(golfCar4);
-        GolfCar golfCar5 = new GolfCar(5, 6, "Gate5", "12:00 PM"); 
+        GolfCar golfCar5 = new GolfCar(5, 6, "Gate5", "12:00 PM");
         GolfCars.add(golfCar5);
 
         ArrayList<Reservation> reservations = new ArrayList<>();
@@ -44,9 +44,6 @@ public class Main {
                     System.out.println("Making a reservation...");
                     System.out.print("Enter golf car number: ");
                     int golfCarNum = scanner.nextInt();
-                    System.out.print("Enter seat number: ");
-                    int seatNum = scanner.nextInt();
-
                     GolfCar selectedCar = null;
                     for (GolfCar car : GolfCars) {
                         if (car.getGolf_Number() == golfCarNum) {
@@ -54,33 +51,62 @@ public class Main {
                             break;
                         }
                     }
-
-                    if (selectedCar != null) {
-                        Reservation reservation = new Reservation(golfCarNum, seatNum, student);
-                        if (reservation.createReservation(golfCarNum, seatNum, student, selectedCar.getSeats())) {
-                            reservations.add(reservation);
+                    if (selectedCar.getSeats() == 0) {
+                        System.out.println("Sorry! No seat available");
+                        System.out.println("Do you want to be in waitingList?\n Enter y if you want OR n if not");
+                        String choiceWaitList = scanner.next();
+                        if (choiceWaitList == "y") {
+                            selectedCar.addToWaitList(studentName);
+                            System.out.print("Your name is added...We will contact you if there is available seat");
+                        } else if (choiceWaitList.startsWith("n")) {
+                            System.out.print("Thanks...we wish to see you again");
                         }
                     } else {
-                        System.out.println("No golf car with the entered number exists. Please try again.");
+                        System.out.print("Enter seat number: ");
+                        int seatNum = scanner.nextInt();
+
+                        if (selectedCar != null) {
+                            Reservation reservation = new Reservation(golfCarNum, seatNum, student);
+                            if (reservation.createReservation(golfCarNum, seatNum, student, selectedCar.getSeats())) {
+                                reservations.add(reservation);
+                                selectedCar.updateSeat(seatNum);
+                            }
+                        } else {
+                            System.out.println("No golf car with the entered number exists. Please try again.");
+                        }
+                        break;
                     }
-                    break;
+
                 case 2:
                     // Delete my reservation
                     System.out.println("Deleting a reservation...");
                     System.out.print("Enter reservation number to cancel: ");
                     int reservationNumToCancel = scanner.nextInt();
                     boolean found = false;
+                    GolfCar selectedGolf = null;
+                    int seatNum = 0;
+                    int golfCarnum = 0;
                     for (int i = 0; i < reservations.size(); i++) {
                         if (reservations.get(i).getReservationNum() == reservationNumToCancel) {
+                            seatNum = reservations.get(i).getSeatNum();
+                            golfCarnum = reservations.get(i).getGolfCarNum();
                             reservations.get(i).cancelReservation(reservationNumToCancel);
                             System.out.println("Reservation cancelled.");
-                            reservations.remove(i); // Remove the reservation from the list
+                            reservations.remove(i); // Remove the reservation from the list 
                             found = true;
                             break;
                         }
                     }
                     if (!found) {
                         System.out.println("No reservation with the given number exists. Please try again.");
+                    } else {
+                        for (GolfCar car : GolfCars) {
+                            if (car.getGolf_Number() == golfCarnum) {
+                                selectedGolf = car;
+                                break;
+                            }
+                        }
+                        selectedGolf.addSeat(seatNum);
                     }
                     break;
                 case 3:
@@ -127,7 +153,6 @@ public class Main {
 
         } while (choice != 4);
 
-
     }
 
     public static void PrintSchedule(ArrayList<GolfCar> GolfCars) {
@@ -145,4 +170,7 @@ public class Main {
         System.out.println("4. EXIT");
     }
 
+    public static void MakeReservation() {
+
+    }
 }

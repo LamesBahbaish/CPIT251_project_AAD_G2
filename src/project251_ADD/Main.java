@@ -5,12 +5,21 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter student ID: ");
-        int studentId = scanner.nextInt(); // Read student ID from input
-        scanner.nextLine(); // Consume the remaining newline
+    static Scanner scanner;
 
+    public static void main(String[] args) {
+        scanner = new Scanner(System.in);
+
+        boolean f = true;
+        int studentId = 0;
+        do {
+            System.out.print("Enter student ID: ");
+            studentId = scanner.nextInt(); // Read student ID from input
+            scanner.nextLine();
+            f = CheckStudentId(studentId);
+        } while (f == false);
+
+        // Consume the remaining newline
         System.out.print("Enter student name: ");
         String studentName = scanner.nextLine(); // Read student name from input
         Student student = new Student(studentId, studentName); // Create a Student object with user input
@@ -87,7 +96,7 @@ public class Main {
                     Reservation reserve = new Reservation(golfCarNum, seatsToBook, student); //reserve
                     reservations.add(reserve);
                     selectedCar.updateSeat(seatsToBook);
-                    System.out.println("Booking successful! Enjoy your ride.");
+                    System.out.println("Booking successful! Your Reservation Number: " + reserve.getReservationNum());
                     break;
 
                 case 2:
@@ -187,10 +196,21 @@ public class Main {
     }
 
     public static void displayMenu() {
+        System.out.println("-------------------------------------------------");
         System.out.print("Choose the appropriate number\n");
         System.out.println("1. Make a reservation");
         System.out.println("2. Delete my reservation");
         System.out.println("3. Modify reservation");
         System.out.println("4. EXIT");
+        System.out.println("-------------------------------------------------");
+    }
+
+    public static boolean CheckStudentId(int StudentID) {
+        if (String.valueOf(StudentID).length() != 7) {
+            System.out.println("Please enter a 7-digit student ID. ");
+            return false;
+        }
+
+        return true;
     }
 }

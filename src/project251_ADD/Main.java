@@ -37,63 +37,58 @@ public class Main {
         int choice;
         int x = 0;
         GolfCar selectedCar = null;
-        do {
-            displayMenu();
 
+        do {
+
+            displayMenu();
+            int golfCarNum;
             System.out.print("Enter choice: ");
             choice = scanner.nextInt();
+
             switch (choice) {
 
                 case 1:
                     // Make a reservation
-                    if (x != 0) {
+                    if (x != 0) { //-------------to print Schedule
                         PrintSchedule(GolfCars);
                     }
                     x += 1;
-
                     System.out.println("Making a reservation...");
-                    
+                    do {
                         System.out.print("Enter golf car number: ");
-                        int golfCarNum = scanner.nextInt();
-
+                        golfCarNum = scanner.nextInt();
                         for (GolfCar car : GolfCars) {
                             if (car.getGolf_Number() == golfCarNum) {
                                 selectedCar = car;
                                 break;
                             }
                         }
-                        
                         if (selectedCar == null) {
-
-                        System.out.println("No golf car with the entered number exists. Please try again.");
-
-                    }
-                  
-
-                    
-                    if (selectedCar.getSeats() == 0) {
-                        System.out.println("Sorry! No seat available");
-                        System.out.println("Do you want to be in waitingList?\n Enter y if you want OR n if not");
-                        String choiceWaitList = scanner.next();
-                        if (choiceWaitList == "y") {
-                            selectedCar.addToWaitList(studentName);
-                            System.out.print("Your name is added...We will contact you if there is available seat");
-                        } else if (choiceWaitList.startsWith("n")) {
-                            System.out.print("Thanks...we wish to see you again");
+                            System.out.println("No golf car with the entered number exists. Please try again.");
+                        } else if (selectedCar.getSeats() == 0) {
+                            System.out.println("Sorry! No seat available");
                         }
-                    } else {
-                        System.out.print("Enter seat number: ");
-                        int seatNum = scanner.nextInt();
 
-                        if (selectedCar != null) {
-                            Reservation reservation = new Reservation(golfCarNum, seatNum, student);
-                            if (reservation.createReservation(golfCarNum, seatNum, student, selectedCar.getSeats())) {
-                                reservations.add(reservation);
-                                selectedCar.updateSeat(seatNum);
-                            }
+                    } while (selectedCar == null || selectedCar.getSeats() == 0);
+
+                    int seatsToBook;
+                    do {
+                        System.out.println("Enter number of seats to book:");
+                        seatsToBook = scanner.nextInt();
+
+                        if (seatsToBook <= 0) {
+                            System.out.println("Invalid number of seats. Please enter a valid number.");
+                        } else if (seatsToBook > selectedCar.getSeats()) {
+                            System.out.println("The seat number is more than the capacity. Please try again.");
                         }
-                        break;
-                    }
+
+                    } while (seatsToBook <= 0 || seatsToBook > selectedCar.getSeats());
+
+                    Reservation reserve = new Reservation(golfCarNum, seatsToBook, student); //reserve
+                    reservations.add(reserve);
+                    selectedCar.updateSeat(seatsToBook);
+                    System.out.println("Booking successful! Enjoy your ride.");
+                    break;
 
                 case 2:
                     // Delete my reservation

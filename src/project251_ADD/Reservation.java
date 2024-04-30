@@ -35,7 +35,7 @@ public class Reservation {
             System.out.println("The seat number is more than the capacity. Please try again.");
             return false;
         }
-        if (seatNum <= 0 || seatNum > maxSeats) {
+        if (seatNum <= 0) {
             System.out.println("The seat number is invalid. Please try again.");
             return false; // Indicate that the reservation was not successful
         } else {

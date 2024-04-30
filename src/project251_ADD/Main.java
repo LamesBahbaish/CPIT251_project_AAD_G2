@@ -31,26 +31,46 @@ public class Main {
         GolfCars.add(golfCar5);
 
         ArrayList<Reservation> reservations = new ArrayList<>();
+        System.out.println("-------------Welcome to Golf car KAU-------------");
+        PrintSchedule(GolfCars);
 
         int choice;
+        int x = 0;
+        GolfCar selectedCar = null;
         do {
-            System.out.println("--------Welcome to Golf car KAU--------");
-            PrintSchedule(GolfCars);
+            displayMenu();
+
             System.out.print("Enter choice: ");
             choice = scanner.nextInt();
             switch (choice) {
+
                 case 1:
                     // Make a reservation
-                    System.out.println("Making a reservation...");
-                    System.out.print("Enter golf car number: ");
-                    int golfCarNum = scanner.nextInt();
-                    GolfCar selectedCar = null;
-                    for (GolfCar car : GolfCars) {
-                        if (car.getGolf_Number() == golfCarNum) {
-                            selectedCar = car;
-                            break;
-                        }
+                    if (x != 0) {
+                        PrintSchedule(GolfCars);
                     }
+                    x += 1;
+
+                    System.out.println("Making a reservation...");
+                    
+                        System.out.print("Enter golf car number: ");
+                        int golfCarNum = scanner.nextInt();
+
+                        for (GolfCar car : GolfCars) {
+                            if (car.getGolf_Number() == golfCarNum) {
+                                selectedCar = car;
+                                break;
+                            }
+                        }
+                        
+                        if (selectedCar == null) {
+
+                        System.out.println("No golf car with the entered number exists. Please try again.");
+
+                    }
+                  
+
+                    
                     if (selectedCar.getSeats() == 0) {
                         System.out.println("Sorry! No seat available");
                         System.out.println("Do you want to be in waitingList?\n Enter y if you want OR n if not");
@@ -71,8 +91,6 @@ public class Main {
                                 reservations.add(reservation);
                                 selectedCar.updateSeat(seatNum);
                             }
-                        } else {
-                            System.out.println("No golf car with the entered number exists. Please try again.");
                         }
                         break;
                     }
@@ -156,21 +174,28 @@ public class Main {
     }
 
     public static void PrintSchedule(ArrayList<GolfCar> GolfCars) {
+        System.out.println("-------------------------------------------------");
+        System.out.println("                Golf Car Schedule                ");
+        System.out.println("-------------------------------------------------");
         System.out.println("GolfCarNO | Destination | Time     | Seats Number");
-        System.out.println("-----------------------------------------------");
+        System.out.println("-------------------------------------------------");
         for (GolfCar car : GolfCars) {
             System.out.printf("%-10d| %-12s| %-9s| %-13d%n",
                     car.getGolf_Number(), car.getLocation(), car.getTime(), car.getSeats());
         }
-        System.out.println("-----------------------------------------------");
+        System.out.println("-------------------------------------------------");
+
+    }
+
+    public static void MakeReservation() {
+
+    }
+
+    public static void displayMenu() {
         System.out.print("Choose the appropriate number\n");
         System.out.println("1. Make a reservation");
         System.out.println("2. Delete my reservation");
         System.out.println("3. Modify reservation");
         System.out.println("4. EXIT");
-    }
-
-    public static void MakeReservation() {
-
     }
 }

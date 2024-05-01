@@ -7,18 +7,27 @@ import java.util.ArrayList;
  * @author linahani
  */
 public class GolfCar {
-
+    private int golfTripNum;
     private int Golf_Number;
     private int seats; //number of seat in golf
     private String Location; //location of golf
     private String Time;
     private ArrayList<String> waitList;
 
-    public GolfCar(int Golf_Number, int seats, String Location, String Time) {
+    public GolfCar(int golfTripNum, int Golf_Number, int seats, String Location, String Time) {
+        this.golfTripNum = golfTripNum;
         this.Golf_Number = Golf_Number;
         this.seats = seats;
         this.Location = Location;
         this.Time = Time;
+    }
+
+    public void setGolfTripNum(int golfTripNum) {
+        this.golfTripNum = golfTripNum;
+    }
+
+    public int getGolfTripNum() {
+        return golfTripNum;
     }
 
     public int getGolf_Number() {

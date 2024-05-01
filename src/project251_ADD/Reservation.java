@@ -12,14 +12,14 @@ public class Reservation {
     // Attributes
 
     private int reservationNum;
-    private int golfCarNum;
+    private int golfTripNum;
     private int seatNum;
     private Student student;
 
     // Constructor
     public Reservation(int golfCarNum, int seatNum, Student student) {
         this.reservationNum = generateReservationNum();
-        this.golfCarNum = golfCarNum;
+        this.golfTripNum = golfCarNum;
         this.seatNum = seatNum;
         this.student = student;
     }
@@ -33,7 +33,7 @@ public class Reservation {
 
     // Method to modify the seat number of the reservation
     public boolean modifySeat(int golfCarNum, int newSeatNum, int maxSeats) {
-        if (this.golfCarNum == golfCarNum && newSeatNum > 0 && newSeatNum <= maxSeats) {
+        if (this.golfTripNum == golfCarNum && newSeatNum > 0 && newSeatNum <= maxSeats) {
             this.seatNum = newSeatNum;
             return true; // Modification successful
         }
@@ -43,7 +43,7 @@ public class Reservation {
     // Method to cancel the reservation
     public boolean cancelReservation(int reservationNum) {
         if (this.reservationNum == reservationNum) {
-            this.golfCarNum = -1; // Indicating that the golf car is no longer associated
+            this.golfTripNum = -1; // Indicating that the golf car is no longer associated
             this.seatNum = -1;    // Indicating that the seat is no longer reserved
             return true;          // Indicate that the reservation was successfully cancelled
         }
@@ -56,7 +56,7 @@ public class Reservation {
     }
 
     public int getGolfCarNum() {
-        return golfCarNum;
+        return golfTripNum;
     }
 
     public int getSeatNum() {

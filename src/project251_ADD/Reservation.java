@@ -29,24 +29,7 @@ public class Reservation {
         return (int) (Math.random() * 10000);
     }
 
-    // Method to create a reservation 
-    public boolean createReservation(int golfCarNum, int seatNum, Student student, int maxSeats) {
-        if (seatNum > maxSeats) {
-            System.out.println("The seat number is more than the capacity. Please try again.");
-            return false;
-        }
-        if (seatNum <= 0) {
-            System.out.println("The seat number is invalid. Please try again.");
-            return false; // Indicate that the reservation was not successful
-        } else {
-            this.golfCarNum = golfCarNum;
-            this.seatNum = seatNum;
-            this.student = student;
-            this.reservationNum = generateReservationNum();
-            System.out.println("Reservation created with number: " + this.reservationNum);
-            return true; // Indicate that the reservation was successful
-        }
-    }
+   
 
     // Method to modify the seat number of the reservation
     public boolean modifySeat(int golfCarNum, int newSeatNum, int maxSeats) {

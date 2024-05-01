@@ -28,16 +28,18 @@ public class Main {
 
         ArrayList<GolfCar> GolfCars = new ArrayList<>(); // Creating an ArrayList to store GolfCar objects
         // Creating and adding golf cars with specific attributes 
-        GolfCar golfCar1 = new GolfCar(1,1, 0, "Gate1", "8:00 AM"); // Create a golf car object
-        GolfCars.add(golfCar1); // Add the golf car to the ArrayList
-        GolfCar golfCar2 = new GolfCar(2,2, 4, "Gate2", "9:00 AM");
-        GolfCars.add(golfCar2);
-        GolfCar golfCar3 = new GolfCar(3,3, 6, "Gate3", "10:00 AM");
-        GolfCars.add(golfCar3);
-        GolfCar golfCar4 = new GolfCar(4,4, 8, "Gate4", "11:00 AM");
-        GolfCars.add(golfCar4);
-        GolfCar golfCar5 = new GolfCar(5,5, 6, "Gate5", "12:00 PM");
-        GolfCars.add(golfCar5);
+        GolfCar trip1 = new GolfCar(1, 1, 2, "Gate1", "8:00 AM"); // Create a golf car object
+        GolfCars.add(trip1); // Add the golf car to the ArrayList
+        GolfCar trip2 = new GolfCar(3, 1, 0, "Gate3", "9:30 AM");
+        GolfCars.add(trip2); // Add the golf car to the ArrayList
+        GolfCar trip3 = new GolfCar(2, 2, 4, "Gate2", "9:00 AM");
+        GolfCars.add(trip3);
+        GolfCar trip4 = new GolfCar(3, 3, 6, "Gate3", "10:00 AM");
+        GolfCars.add(trip4);
+        GolfCar trip5 = new GolfCar(4, 4, 8, "Gate4", "11:00 AM");
+        GolfCars.add(trip5);
+        GolfCar trip6 = new GolfCar(5, 5, 6, "Gate5", "12:00 PM");
+        GolfCars.add(trip6);
 
         ArrayList<Reservation> reservations = new ArrayList<>();
         System.out.println("-------------Welcome to Golf car KAU-------------");
@@ -67,7 +69,7 @@ public class Main {
                         System.out.print("Enter golf trip number: ");
                         golfTripNum = scanner.nextInt();
                         for (GolfCar car : GolfCars) {
-                            if (car.getGolf_Number() == golfTripNum) {
+                            if (car.getGolfTripNum() == golfTripNum) {
                                 selectedCar = car;
                                 break;
                             }
@@ -178,17 +180,17 @@ public class Main {
     }
 
     public static void PrintSchedule(ArrayList<GolfCar> GolfCars) {
-        
+
         System.out.println("-------------------------------------------------");
         System.out.println("                Golf Car Schedule                ");
         System.out.println("-------------------------------------------------");
         System.out.println("GolfTripNO | GolfCarNO | Destination | Time     | Seats Number");
-        System.out.println("-------------------------------------------------");
+        System.out.println("------------------------------------------------------------");
         for (GolfCar car : GolfCars) {
-            System.out.printf("%-10d| %-10d| %-12s| %-9s| %-13d%n",
-                 car.getGolfTripNum(),   car.getGolf_Number(), car.getLocation(), car.getTime(), car.getSeats());
+            System.out.printf("%-11d| %-10d| %-12s| %-9s| %-13d%n",
+                    car.getGolfTripNum(), car.getGolf_Number(), car.getLocation(), car.getTime(), car.getSeats());
         }
-        System.out.println("-------------------------------------------------");
+        System.out.println("------------------------------------------------------------");
 
     }
 
@@ -197,7 +199,7 @@ public class Main {
     }
 
     public static void displayMenu() {
-        System.out.println("-------------------------------------------------");
+        System.out.println("------------------------------------------------------------");
         System.out.print("Choose the appropriate number\n");
         System.out.println("1. Make a reservation");
         System.out.println("2. Delete my reservation");

@@ -163,7 +163,7 @@ public class Main {
         System.out.print("Choose the appropriate number\n");
         System.out.println("1. Make a Reservation");
         System.out.println("2. Cancel My Reservation");
-        System.out.println("3. Modify Reservation");
+        System.out.println("3. Modify Seat number in my Reservation");
         System.out.println("4. My Reservations");
         System.out.println("5. EXIT");
         System.out.println("-------------------------------------------------");

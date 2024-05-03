@@ -12,14 +12,16 @@ public class Reservation {
     // Attributes
 
     private int reservationNum;
+    private int golfCarNum;
     private int golfTripNum;
     private int seatNum;
     private Student student;
 
     // Constructor
-    public Reservation(int golfCarNum, int seatNum, Student student) {
+    public Reservation(int golfTripNum, int golfCarNum, int seatNum, Student student) {
         this.reservationNum = generateReservationNum();
-        this.golfTripNum = golfCarNum;
+        this.golfCarNum = golfCarNum;
+        this.golfTripNum = golfTripNum;
         this.seatNum = seatNum;
         this.student = student;
     }
@@ -28,8 +30,6 @@ public class Reservation {
     public int generateReservationNum() {
         return (int) (Math.random() * 10000);
     }
-
-   
 
     // Method to modify the seat number of the reservation
     public boolean modifySeat(int golfCarNum, int newSeatNum, int maxSeats) {
@@ -63,8 +63,16 @@ public class Reservation {
         return seatNum;
     }
 
+    public void setSeatNum(int newSeatNum) {
+        this.seatNum = newSeatNum;
+    }
+
     public Student getStudent() {
         return student;
+    }
+
+    public int getGolfTripNum() {
+        return golfTripNum;
     }
 
 }

@@ -31,25 +31,6 @@ public class Reservation {
         return (int) (Math.random() * 10000);
     }
 
-    // Method to modify the seat number of the reservation
-    public boolean modifySeat(int golfCarNum, int newSeatNum, int maxSeats) {
-        if (this.golfTripNum == golfCarNum && newSeatNum > 0 && newSeatNum <= maxSeats) {
-            this.seatNum = newSeatNum;
-            return true; // Modification successful
-        }
-        return false; // Modification failed
-    }
-
-    // Method to cancel the reservation
-    public boolean cancelReservation(int reservationNum) {
-        if (this.reservationNum == reservationNum) {
-            this.golfTripNum = -1; // Indicating that the golf car is no longer associated
-            this.seatNum = -1;    // Indicating that the seat is no longer reserved
-            return true;          // Indicate that the reservation was successfully cancelled
-        }
-        return false;            // Indicate that there was no such reservation to cancel
-    }
-
     // Getters and Setters for all attributes...
     public int getReservationNum() {
         return reservationNum;

@@ -294,4 +294,23 @@ public class Main {
             System.out.println("Invalid trip number or you don't have a reservation for that trip.");
         }
     }
+
+    public static void PrintSchedule_forTest(GolfCar object) {
+
+        System.out.println("                Golf Car Schedule                ");
+        System.out.println("-------------------------------------------------");
+        System.out.println("GolfTripNO | GolfCarNO | Destination | Time     | Seats Number");
+        System.out.println("------------------------------------------------------------");
+        System.out.printf("%-11d| %-10d| %-12s| %-9s| %-13d%n",
+                    object.getGolfTripNum(), object.getGolf_Number(), object.getDestination(), object.getTime(), object.getSeats());
+    }
+
+    public static void CreateReservationT(GolfCar selectedCar, Student student) {
+        System.out.print("Enter number of seats to book:");
+        int seatsToBook = scanner.nextInt();
+        Reservation reserve = new Reservation(selectedCar.getGolfTripNum(), selectedCar.getGolf_Number(), seatsToBook, student); //reserve
+        reservations.add(reserve);
+        selectedCar.ReserveSeat(seatsToBook);
+        System.out.println("Booking successful! Your Reservation Number: " + reserve.getReservationNum());
+    }
 }

@@ -39,7 +39,6 @@ public class GolfCar {
         return seats;
     }
 
-
     public String getDestination() {
         return Destination;
     }

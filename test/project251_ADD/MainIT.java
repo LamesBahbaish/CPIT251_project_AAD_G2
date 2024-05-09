@@ -77,17 +77,49 @@ public class MainIT {
         // Create a sample Student object
         Student student = new Student(1234567, "Lames");
         // Redirect System.in and System.out to simulate user input and output
-        String input = "4\n"; // Simulate user input for number of seats to book
+        String input = "1\n"; // Simulate user input for number of seats to book
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         //String expectedOutput = "Booking successful! Your Reservation Number: reserve.getReservationNum())\n";
         // Call the method to be tested
-        Main.CreateReservation(golfCar, student);
+        Main.CreateReservation(golfCar, student,1);
         // Verify if the reservation was done correctly
         assertTrue(out.toString().contains("Booking successful!")); // Check if success message is printed
     }
+    
+    @Test
+    public void testCheckSeats_ValidSeats() {
+        boolean result = Main.checkSeats(3, 10);
+        assertTrue(result); // Expecting true for valid seats
+    }
+
+    @Test
+    public void testCheckSeats_ZeroSeats() {
+        boolean result = Main.checkSeats(0, 10);
+        assertFalse(result); // Expecting false for zero seats
+    }
+
+    @Test
+    public void testCheckSeats_NegativeSeats() {
+        boolean result = Main.checkSeats(-5, 10);
+        assertFalse(result); // Expecting false for negative seats
+    }
+
+    @Test
+    public void testCheckSeats_ExceedTotalSeats() {
+        boolean result = Main.checkSeats(15, 10);
+        assertFalse(result); // Expecting false for seats exceeding total seats
+    }
+
+    @Test
+    public void testCheckSeats_EqualSeatsToTotal() {
+        boolean result = Main.checkSeats(10, 10);
+        assertTrue(result); // Expecting true for seats equal to total seats
+    }
+
+    
 
     /**
      * Test of checkSeats method, of class Main.

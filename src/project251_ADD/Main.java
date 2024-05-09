@@ -93,8 +93,16 @@ public class Main {
                         break;
                     }
 
+                    int seatsToBook;
+                    boolean checkSeatsFlag = true;
+                    do {
+                        System.out.print("Enter number of seats to book:");
+                        seatsToBook = scanner.nextInt();
+                        checkSeatsFlag = checkSeats(seatsToBook, selectedCar.getSeats());
+                    } while (!checkSeatsFlag);
+
                     if (selectedCar != null && selectedCar.getSeats() > 0) {
-                        CreateReservation(selectedCar, student);
+                        CreateReservation(selectedCar, student, seatsToBook);
                     }
                     break;
 
@@ -122,13 +130,7 @@ public class Main {
 
                     break;
                 case 4:
-                    // Print all reservations
-                    if (!reservations.isEmpty()) {
-                        MyReservations();
-                    } else {
-                        System.out.println("You don't have any reservations");
-
-                    }
+                    MyReservations();
                     break;
                 case 5:
                     // Exit
@@ -177,14 +179,8 @@ public class Main {
         return true;
     }
 
-    public static void CreateReservation(GolfCar selectedCar, Student student) {
-        int seatsToBook;
-        boolean checkSeatsFlag = true;
-        do {
-            System.out.print("Enter number of seats to book:");
-            seatsToBook = scanner.nextInt();
-            checkSeatsFlag = checkSeats(seatsToBook, selectedCar.getSeats());
-        } while (!checkSeatsFlag);
+    public static void CreateReservation(GolfCar selectedCar, Student student, int seatsToBook) {
+
         Reservation reserve = new Reservation(selectedCar.getGolfTripNum(), selectedCar.getGolf_Number(), seatsToBook, student); //reserve
         reservations.add(reserve);
         selectedCar.ReserveSeat(seatsToBook);
@@ -205,9 +201,15 @@ public class Main {
 
     public static void MyReservations() {
 
-        System.out.println("All reservations:");
-        for (int i = 0; i < reservations.size(); i++) {
-            System.out.println((i + 1) + ". Reservation Number: " + reservations.get(i).getReservationNum() + ", Trip Number: " + reservations.get(i).getGolfTripNum() + ", Seat Number: " + reservations.get(i).getSeatNum());
+        if (!reservations.isEmpty()) {
+            System.out.println("All reservations:");
+            for (int i = 0; i < reservations.size(); i++) {
+                System.out.println((i + 1) + ". Reservation Number: " + reservations.get(i).getReservationNum() + ", Trip Number: " + reservations.get(i).getGolfTripNum() + ", Seat Number: " + reservations.get(i).getSeatNum());
+
+            }
+
+        } else {
+            System.out.println("You don't have any reservations");
 
         }
     }

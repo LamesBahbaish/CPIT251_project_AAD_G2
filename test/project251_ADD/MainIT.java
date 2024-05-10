@@ -10,6 +10,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Scanner;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -22,7 +23,9 @@ import static org.junit.Assert.*;
  */
 public class MainIT {
 
+    
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
     private final ArrayList<GolfCar> GolfCars = new ArrayList<>();
     private final GolfCar golfCar = new GolfCar(1, 1, 2, "Gate1", "8:00 AM");
@@ -41,12 +44,34 @@ public class MainIT {
     @Before
     public void setUp() {
         System.setOut(new PrintStream(out));
+        System.setOut(new PrintStream(outContent));
         GolfCars.add(golfCar); 
+        
+        // Setup the environment
+        Main.reservations.clear();
+        Main.GolfCars.clear();
+        
+         // Add a golf car to the list
+        GolfCar golfCar = new GolfCar(1, 1, 2, "Gate1", "8:00 AM");
+        Main.GolfCars.add(golfCar);
+
+        // Create a student
+        Student student = new Student(1234567, "John Doe");
+
+        // Create a reservation and add it
+        Reservation reservation = new Reservation(1, 1, 2, student);
+        Main.reservations.add(reservation);
+
+        // Simulate user input that selects the reservation to cancel
+        String simulatedUserInput = "1\n"; // assuming the reservation number to cancel is 1
+        System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes()));
+        Main.scanner = new Scanner(System.in);
     }
 
     @After
     public void tearDown() {
         System.setOut(originalOut);
+        System.setIn(System.in);
     }
 
     /**
@@ -149,9 +174,10 @@ public class MainIT {
     @Test
     public void testCancelReservation() {
         System.out.println("CancelReservation");
+        int initialSize = Main.reservations.size();
         Main.CancelReservation();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals("Reservations list should have one less reservation", initialSize - 1, Main.reservations.size());
+        assertTrue("Output should confirm cancellation", outContent.toString().contains("canceled successfully"));
     }
 
     /**

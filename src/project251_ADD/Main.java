@@ -180,7 +180,6 @@ public class Main {
     }
 
     public static void CreateReservation(GolfCar selectedCar, Student student, int seatsToBook) {
-
         Reservation reserve = new Reservation(selectedCar.getGolfTripNum(), selectedCar.getGolf_Number(), seatsToBook, student); //reserve
         reservations.add(reserve);
         selectedCar.ReserveSeat(seatsToBook);

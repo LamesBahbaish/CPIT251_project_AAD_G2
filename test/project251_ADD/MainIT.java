@@ -17,16 +17,15 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
 /**
  *
  * @author Lames_ASB
  */
 public class MainIT {
 
-    
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final PrintStream originalOut = System.out;
+    // private final PrintStream originalOut = System.out;
     private final ArrayList<GolfCar> GolfCars = new ArrayList<>();
     private final GolfCar golfCar = new GolfCar(1, 1, 2, "Gate1", "8:00 AM");
 
@@ -44,34 +43,11 @@ public class MainIT {
     @Before
     public void setUp() {
         System.setOut(new PrintStream(out));
-        System.setOut(new PrintStream(outContent));
-        GolfCars.add(golfCar); 
-        
-        // Setup the environment
-        Main.reservations.clear();
-        Main.GolfCars.clear();
-        
-         // Add a golf car to the list
-        GolfCar golfCar = new GolfCar(1, 1, 2, "Gate1", "8:00 AM");
-        Main.GolfCars.add(golfCar);
-
-        // Create a student
-        Student student = new Student(1234567, "John Doe");
-
-        // Create a reservation and add it
-        Reservation reservation = new Reservation(1, 1, 2, student);
-        Main.reservations.add(reservation);
-
-        // Simulate user input that selects the reservation to cancel
-        String simulatedUserInput = "1\n"; // assuming the reservation number to cancel is 1
-        System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes()));
-        Main.scanner = new Scanner(System.in);
+        GolfCars.add(golfCar);
     }
 
     @After
     public void tearDown() {
-        System.setOut(originalOut);
-        System.setIn(System.in);
     }
 
     /**
@@ -109,11 +85,14 @@ public class MainIT {
         System.setOut(new PrintStream(out));
         //String expectedOutput = "Booking successful! Your Reservation Number: reserve.getReservationNum())\n";
         // Call the method to be tested
-        Main.CreateReservation(golfCar, student,1);
+        Main.CreateReservation(golfCar, student, 1);
         // Verify if the reservation was done correctly
         assertTrue(out.toString().contains("Booking successful!")); // Check if success message is printed
     }
-    
+
+    /**
+     * Test of checkSeats method, of class Main.
+     */
     @Test
     public void testCheckSeats_ValidSeats() {
         boolean result = Main.checkSeats(3, 10);
@@ -144,10 +123,8 @@ public class MainIT {
         assertTrue(result); // Expecting true for seats equal to total seats
     }
 
-    
-
     /**
-     * Test of checkSeats method, of class Main.
+     * Test of StudentID method, of class Main.
      */
     @Test
     public void testCheckStudentId() {
@@ -173,11 +150,21 @@ public class MainIT {
      */
     @Test
     public void testCancelReservation() {
+        GolfCar golfCar = new GolfCar(1, 1, 2, "Gate1", "8:00 AM");
+        // Create a student
+        Student student = new Student(1234567, "John Doe");
+        // Create a reservation and add it
+        Reservation reservation = new Reservation(1, 1, 2, student);
+        Main.reservations.add(reservation);
+        // Simulate user input that selects the reservation to cancel
+        String simulatedUserInput = "1\n"; // assuming the reservation number to cancel is 1
+        System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes()));
+        Main.scanner = new Scanner(System.in);
         System.out.println("CancelReservation");
         int initialSize = Main.reservations.size();
         Main.CancelReservation();
         assertEquals("Reservations list should have one less reservation", initialSize - 1, Main.reservations.size());
-        assertTrue("Output should confirm cancellation", outContent.toString().contains("canceled successfully"));
+        assertTrue("Output should confirm cancellation", out.toString().contains("canceled successfully"));
     }
 
     /**

@@ -152,7 +152,7 @@ public class MainIT {
     public void testCancelReservation() {
         GolfCar golfCar = new GolfCar(1, 1, 2, "Gate1", "8:00 AM");
         // Create a student
-        Student student = new Student(1234567, "John Doe");
+        Student student = new Student(1234567, "Joud");
         // Create a reservation and add it
         Reservation reservation = new Reservation(1, 1, 2, student);
         Main.reservations.add(reservation);

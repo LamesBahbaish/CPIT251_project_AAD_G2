@@ -28,6 +28,9 @@ public class MainIT {
     // private final PrintStream originalOut = System.out;
     private final ArrayList<GolfCar> GolfCars = new ArrayList<>();
     private final GolfCar golfCar = new GolfCar(1, 1, 2, "Gate1", "8:00 AM");
+    
+ 
+
 
     public MainIT() {
     }
@@ -174,10 +177,37 @@ public class MainIT {
      */
     @Test
     public void testModifyReservation() {
-        System.out.println("ModifyReservation");
-        Main.ModifyReservation();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+       // Create test data
+        GolfCar car = new GolfCar(1, 1, 2, "Gate1", "8:00 AM");
+       // Create a student
 
+        Student student = new Student(1234567, "Aryam");
+
+
+        Reservation reservation = new Reservation(1, 1, 2,student );
+        ArrayList<GolfCar> golfCars = new ArrayList<>();
+        golfCars.add(car);
+        ArrayList<Reservation> reservations = new ArrayList<>();
+        reservations.add(reservation);
+        
+        // Modify reservation
+        int tripNumToModify = 1; // Assuming trip number to modify is 1
+        int newSeatNum = 3; // Assuming new seat number is 3
+
+        // Mock user input
+        ByteArrayInputStream in = new ByteArrayInputStream("".getBytes());
+        System.setIn(in);
+
+        // Call the method under test
+        Main.ModifyReservation();
+
+        // Assert the result
+        // Verify that the number of seats for the GolfCar has been updated
+        assertEquals(5, car.getSeats());
+
+        // Verify that the seat number for the Reservation has been updated
+        assertEquals(3, reservation.getSeatNum());
+
+         assertTrue( out.toString().contains("Reservation modified successfully."));
+    }
 }

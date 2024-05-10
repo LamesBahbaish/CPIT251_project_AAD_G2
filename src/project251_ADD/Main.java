@@ -5,12 +5,12 @@ import java.util.Scanner;
 
 public class Main {
 
-    static Scanner scanner;
+    static Scanner scanner = new Scanner(System.in);
     static ArrayList<Reservation> reservations = new ArrayList<>();
     static ArrayList<GolfCar> GolfCars = new ArrayList<>();
 
     public static void main(String[] args) {
-        scanner = new Scanner(System.in);
+        initializeGolfCars();//Add golf car to array list
 
         boolean f = true;
         int studentId = 0;
@@ -27,20 +27,6 @@ public class Main {
         Student student = new Student(studentId, studentName); // Create a Student object with user input
 
         System.out.println("Hello " + student.getName() + "!");
-
-        // Creating and adding golf cars with specific attributes 
-        GolfCar trip1 = new GolfCar(1, 1, 2, "Gate1", "8:00 AM"); // Create a golf car object
-        GolfCars.add(trip1); // Add the golf car to the ArrayList
-        GolfCar trip2 = new GolfCar(2, 1, 0, "Gate3", "9:30 AM");
-        GolfCars.add(trip2); // Add the golf car to the ArrayList
-        GolfCar trip3 = new GolfCar(3, 2, 4, "Gate2", "9:00 AM");
-        GolfCars.add(trip3);
-        GolfCar trip4 = new GolfCar(4, 3, 6, "Gate3", "10:00 AM");
-        GolfCars.add(trip4);
-        GolfCar trip5 = new GolfCar(5, 4, 8, "Gate4", "11:00 AM");
-        GolfCars.add(trip5);
-        GolfCar trip6 = new GolfCar(6, 5, 6, "Gate5", "12:00 PM");
-        GolfCars.add(trip6);
 
         System.out.println("-------------Welcome to Golf car KAU-------------");
         PrintSchedule(GolfCars);
@@ -145,7 +131,21 @@ public class Main {
 
     }
 
-    public static void PrintSchedule(ArrayList<GolfCar> GolfCars) {
+//-------------------------------------------------------------------------------------------------------------------------------------------
+//                                                     INTRODUCTION    
+//-------------------------------------------------------------------------------------------------------------------------------------------
+    
+    private static void initializeGolfCars() { //Add golf car to array list 
+        GolfCars.add(new GolfCar(1, 1, 2, "Gate1", "8:00 AM"));
+        GolfCars.add(new GolfCar(2, 1, 0, "Gate3", "9:30 AM"));
+        GolfCars.add(new GolfCar(3, 2, 4, "Gate2", "9:00 AM"));
+        GolfCars.add(new GolfCar(4, 3, 6, "Gate3", "10:00 AM"));
+        GolfCars.add(new GolfCar(5, 4, 8, "Gate4", "11:00 AM"));
+        GolfCars.add(new GolfCar(6, 5, 6, "Gate5", "12:00 PM"));
+
+    }
+
+    public static void PrintSchedule(ArrayList<GolfCar> GolfCars) { //display schedule
 
         System.out.println("-------------------------------------------------");
         System.out.println("                Golf Car Schedule                ");
@@ -160,7 +160,7 @@ public class Main {
 
     }
 
-    public static void displayMenu() {
+    public static void displayMenu() { //display menu
         System.out.println("------------------------------------------------------------");
         System.out.print("Choose the appropriate number\n");
         System.out.println("1. Make a Reservation");
@@ -171,7 +171,7 @@ public class Main {
         System.out.println("-------------------------------------------------");
     }
 
-    public static boolean CheckStudentId(int StudentID) {
+    public static boolean CheckStudentId(int StudentID) { //check student ID
         if (String.valueOf(StudentID).length() != 7) {
             System.out.println("Please enter a 7-digit student ID. ");
             return false;
@@ -179,6 +179,10 @@ public class Main {
         return true;
     }
 
+//-------------------------------------------------------------------------------------------------------------------------------------------
+//                                                     case1: Make reservation    
+//-------------------------------------------------------------------------------------------------------------------------------------------
+    
     public static void CreateReservation(GolfCar selectedCar, Student student, int seatsToBook) {
         Reservation reserve = new Reservation(selectedCar.getGolfTripNum(), selectedCar.getGolf_Number(), seatsToBook, student); //reserve
         reservations.add(reserve);
@@ -198,21 +202,10 @@ public class Main {
         return true;
     }
 
-    public static void MyReservations() {
-
-        if (!reservations.isEmpty()) {
-            System.out.println("All reservations:");
-            for (int i = 0; i < reservations.size(); i++) {
-                System.out.println((i + 1) + ". Reservation Number: " + reservations.get(i).getReservationNum() + ", Trip Number: " + reservations.get(i).getGolfTripNum() + ", Seat Number: " + reservations.get(i).getSeatNum());
-
-            }
-
-        } else {
-            System.out.println("You don't have any reservations");
-
-        }
-    }
-
+//-------------------------------------------------------------------------------------------------------------------------------------------
+//                                                     case2: Delete reservation    
+//-------------------------------------------------------------------------------------------------------------------------------------------
+   
     public static void CancelReservation() {
         // Prompt the user to select which reservation to cancel
         System.out.print("Enter the number of the trip reservation you want to cancel: ");
@@ -248,6 +241,10 @@ public class Main {
         }
     }
 
+//-------------------------------------------------------------------------------------------------------------------------------------------
+//                                                     case3: Modify reservation    
+//-------------------------------------------------------------------------------------------------------------------------------------------
+   
     public static void ModifyReservation() {
         boolean checkSeatsFlag;
         int newSeatNum = 0;
@@ -293,6 +290,24 @@ public class Main {
             System.out.println("Reservation modified successfully.");
         } else {
             System.out.println("Invalid trip number or you don't have a reservation for that trip.");
+        }
+    }
+//-------------------------------------------------------------------------------------------------------------------------------------------
+//                                                     case4: Display reservation    
+//-------------------------------------------------------------------------------------------------------------------------------------------
+
+    public static void MyReservations() {
+
+        if (!reservations.isEmpty()) {
+            System.out.println("All reservations:");
+            for (int i = 0; i < reservations.size(); i++) {
+                System.out.println((i + 1) + ". Reservation Number: " + reservations.get(i).getReservationNum() + ", Trip Number: " + reservations.get(i).getGolfTripNum() + ", Seat Number: " + reservations.get(i).getSeatNum());
+
+            }
+
+        } else {
+            System.out.println("You don't have any reservations");
+
         }
     }
 

@@ -135,7 +135,8 @@ public class Main {
 //                                                     INTRODUCTION    
 //-------------------------------------------------------------------------------------------------------------------------------------------
     
-    private static void initializeGolfCars() { //Add golf car to array list 
+   
+    static void initializeGolfCars() { //Add golf car to array list 
         GolfCars.add(new GolfCar(1, 1, 2, "Gate1", "8:00 AM"));
         GolfCars.add(new GolfCar(2, 1, 0, "Gate3", "9:30 AM"));
         GolfCars.add(new GolfCar(3, 2, 4, "Gate2", "9:00 AM"));

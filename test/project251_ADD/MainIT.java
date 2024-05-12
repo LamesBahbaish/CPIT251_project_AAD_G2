@@ -28,9 +28,6 @@ public class MainIT {
     // private final PrintStream originalOut = System.out;
     private final ArrayList<GolfCar> GolfCars = new ArrayList<>();
     private final GolfCar golfCar = new GolfCar(1, 1, 2, "Gate1", "8:00 AM");
-    
- 
-
 
     public MainIT() {
     }
@@ -47,6 +44,8 @@ public class MainIT {
     public void setUp() {
         System.setOut(new PrintStream(out));
         GolfCars.add(golfCar);
+        Main.reservations.clear();
+        Main.GolfCars.clear();
     }
 
     @After
@@ -147,8 +146,6 @@ public class MainIT {
         assertFalse(result);
         // TODO review the generated test code and remove the default call to fail.
     }
-    
-    
 
     /**
      * Test of CancelReservation method, of class Main.
@@ -177,37 +174,31 @@ public class MainIT {
      */
     @Test
     public void testModifyReservation() {
-       // Create test data
-        GolfCar car = new GolfCar(1, 1, 2, "Gate1", "8:00 AM");
-       // Create a student
-
+        GolfCar car = new GolfCar(1, 1, 5, "Gate1", "8:00 AM");
         Student student = new Student(1234567, "Aryam");
+        Reservation reservation = new Reservation(1, 1, 2, student);
+        Main.GolfCars.add(car);
+        Main.reservations.add(reservation); // Add a reservation to modify
 
+        // Input Simulation: Choose reservation to modify and new seat count
+        String input = "1\n3\n"; // Choose reservation 1, change seats to 3
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+        Main.scanner = new Scanner(System.in);
 
-        Reservation reservation = new Reservation(1, 1, 2,student );
-        ArrayList<GolfCar> golfCars = new ArrayList<>();
-        golfCars.add(car);
-        ArrayList<Reservation> reservations = new ArrayList<>();
-        reservations.add(reservation);
-        
-        // Modify reservation
-        int tripNumToModify = 1; // Assuming trip number to modify is 1
-        int newSeatNum = 3; // Assuming new seat number is 3
-
-        // Mock user input
-        ByteArrayInputStream in = new ByteArrayInputStream("".getBytes());
-        System.setIn(in);
-
-        // Call the method under test
+        // Execute the ModifyReservation functionality
         Main.ModifyReservation();
 
-        // Assert the result
-        // Verify that the number of seats for the GolfCar has been updated
-        assertEquals(5, car.getSeats());
+        // Verify the seat number is updated in the reservation
+        assertEquals("Expected seat number updated in reservation", 3, reservation.getSeatNum());
 
-        // Verify that the seat number for the Reservation has been updated
-        assertEquals(3, reservation.getSeatNum());
+        // Verify the seat count is updated correctly in the golf car
+        assertEquals("Expected seat number updated in golf car", 4, car.getSeats()); // assuming the original was reduced and now increased again
 
-         assertTrue( out.toString().contains("Reservation modified successfully."));
+        // Check output for success message
+        assertTrue("Expected success message in output", out.toString().contains("Reservation modified successfully"));
+
+        // Reset System.in and System.out to avoid any side effects
+        System.setIn(System.in);
+        System.setOut(System.out);
     }
 }

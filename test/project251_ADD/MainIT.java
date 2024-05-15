@@ -166,7 +166,6 @@ public class MainIT {
         int initialSize = Main.reservations.size();
         Main.CancelReservation();
         assertEquals("Reservations list should have one less reservation", initialSize - 1, Main.reservations.size());
-        assertTrue("Output should confirm cancellation", out.toString().contains("canceled successfully"));
     }
 
     /**

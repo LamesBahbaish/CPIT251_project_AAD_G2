@@ -134,7 +134,6 @@ public class MainIT {
         int StudentID = 2210510;
         boolean result = Main.CheckStudentId(StudentID);
         assertTrue(result);
-        // TODO review the generated test code and remove the default call to fail.
 
     }
 
@@ -144,7 +143,6 @@ public class MainIT {
         int StudentID = 22105;
         boolean result = Main.CheckStudentId(StudentID);
         assertFalse(result);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
@@ -178,18 +176,14 @@ public class MainIT {
         Reservation reservation = new Reservation(1, 1, 2, student);
         Main.GolfCars.add(car);
         Main.reservations.add(reservation); // Add a reservation to modify
-
         // Input Simulation: Choose reservation to modify and new seat count
         String input = "1\n3\n"; // Choose reservation 1, change seats to 3
         System.setIn(new ByteArrayInputStream(input.getBytes()));
         Main.scanner = new Scanner(System.in);
-
         // Execute the ModifyReservation functionality
         Main.ModifyReservation();
-
         // Verify the seat number is updated in the reservation
         assertEquals("Expected seat number updated in reservation", 3, reservation.getSeatNum());
-        
         // Reset System.in and System.out to avoid any side effects
         System.setIn(System.in);
         System.setOut(System.out);

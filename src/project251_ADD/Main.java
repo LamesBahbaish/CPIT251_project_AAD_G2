@@ -93,13 +93,10 @@ public class Main {
                     break;
 
                 case 2:
-                    // Delete my reservation
-                    System.out.println("Cancel a reservation...");
-                    // Display all reservations
+                    //modify my reservation
                     if (!reservations.isEmpty()) {
                         MyReservations();
-                        CancelReservation();
-
+                        ModifyReservation();
                     } else {
                         System.out.println("You don't have any reservations");
                     }
@@ -107,9 +104,13 @@ public class Main {
                     break;
 
                 case 3:
+                    // Delete my reservation
+                    System.out.println("Cancel a reservation...");
+                    // Display all reservations
                     if (!reservations.isEmpty()) {
                         MyReservations();
-                        ModifyReservation();
+                        CancelReservation();
+
                     } else {
                         System.out.println("You don't have any reservations");
                     }
@@ -134,8 +135,6 @@ public class Main {
 //-------------------------------------------------------------------------------------------------------------------------------------------
 //                                                     INTRODUCTION    
 //-------------------------------------------------------------------------------------------------------------------------------------------
-    
-   
     static void initializeGolfCars() { //Add golf car to array list 
         GolfCars.add(new GolfCar(1, 1, 2, "Gate1", "8:00 AM"));
         GolfCars.add(new GolfCar(2, 1, 0, "Gate3", "9:30 AM"));
@@ -165,8 +164,8 @@ public class Main {
         System.out.println("------------------------------------------------------------");
         System.out.print("Choose the appropriate number\n");
         System.out.println("1. Make a Reservation");
-        System.out.println("2. Cancel My Reservation");
-        System.out.println("3. Modify Seat number in my Reservation");
+        System.out.println("2. Modify Seat number in my Reservation");
+        System.out.println("3. Cancel My Reservation");
         System.out.println("4. My Reservations");
         System.out.println("5. EXIT");
         System.out.println("-------------------------------------------------");
@@ -183,7 +182,6 @@ public class Main {
 //-------------------------------------------------------------------------------------------------------------------------------------------
 //                                                     case1: Make reservation    
 //-------------------------------------------------------------------------------------------------------------------------------------------
-    
     public static void CreateReservation(GolfCar selectedCar, Student student, int seatsToBook) {
         Reservation reserve = new Reservation(selectedCar.getGolfTripNum(), selectedCar.getGolf_Number(), seatsToBook, student); //reserve
         reservations.add(reserve);
@@ -204,48 +202,8 @@ public class Main {
     }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------
-//                                                     case2: Delete reservation    
+//                                                     case2: Modify reservation    
 //-------------------------------------------------------------------------------------------------------------------------------------------
-   
-    public static void CancelReservation() {
-        // Prompt the user to select which reservation to cancel
-        System.out.print("Enter the number of the trip reservation you want to cancel: ");
-        int tripNumToCancel = scanner.nextInt();
-        int reservationNumToCancel = 0;
-        boolean found = false;
-        for (Reservation res : reservations) {
-            if (res.getGolfTripNum() == tripNumToCancel) {
-                reservationNumToCancel = res.getReservationNum();
-                found = true;
-                break;
-            }
-        }
-        if (found) {
-            // Remove the reservation
-            for (int i = 0; i < reservations.size(); i++) {
-                if (reservations.get(i).getReservationNum() == reservationNumToCancel) {
-                    Reservation canceledReservation = reservations.remove(i);
-                    // Find the corresponding golf car
-                    for (GolfCar car : GolfCars) {
-                        if (car.getGolfTripNum() == tripNumToCancel) {
-                            // Add back the canceled seats to the golf car
-                            car.addSeat(canceledReservation.getSeatNum());
-                            break;
-                        }
-                    }
-                    System.out.println("Reservation " + reservationNumToCancel + 1 + " canceled successfully.");
-                    break;
-                }
-            }
-        } else {
-            System.out.println("Invalid trip number or you don't have a reservation for that trip.");
-        }
-    }
-
-//-------------------------------------------------------------------------------------------------------------------------------------------
-//                                                     case3: Modify reservation    
-//-------------------------------------------------------------------------------------------------------------------------------------------
-   
     public static void ModifyReservation() {
         boolean checkSeatsFlag;
         int newSeatNum = 0;
@@ -254,7 +212,7 @@ public class Main {
         int reservationNumToModify;
         boolean tripFound = false;
 
-        System.out.print("Enter the number of the trip reservation you want to cancel: ");
+        System.out.print("Enter the number of the trip reservation you want to Modify: ");
         int tripNumToModify = scanner.nextInt();
 
         for (GolfCar car : GolfCars) {
@@ -289,6 +247,44 @@ public class Main {
                 }
             }
             System.out.println("Reservation modified successfully.");
+        } else {
+            System.out.println("Invalid trip number or you don't have a reservation for that trip.");
+        }
+    }
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+//                                                     case3: Delete reservation    
+//-------------------------------------------------------------------------------------------------------------------------------------------
+    public static void CancelReservation() {
+        // Prompt the user to select which reservation to cancel
+        System.out.print("Enter the number of the trip reservation you want to cancel: ");
+        int tripNumToCancel = scanner.nextInt();
+        int reservationNumToCancel = 0;
+        boolean found = false;
+        for (Reservation res : reservations) {
+            if (res.getGolfTripNum() == tripNumToCancel) {
+                reservationNumToCancel = res.getReservationNum();
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            // Remove the reservation
+            for (int i = 0; i < reservations.size(); i++) {
+                if (reservations.get(i).getReservationNum() == reservationNumToCancel) {
+                    Reservation canceledReservation = reservations.remove(i);
+                    // Find the corresponding golf car
+                    for (GolfCar car : GolfCars) {
+                        if (car.getGolfTripNum() == tripNumToCancel) {
+                            // Add back the canceled seats to the golf car
+                            car.addSeat(canceledReservation.getSeatNum());
+                            break;
+                        }
+                    }
+                    System.out.println("Reservation " + reservationNumToCancel + 1 + " canceled successfully.");
+                    break;
+                }
+            }
         } else {
             System.out.println("Invalid trip number or you don't have a reservation for that trip.");
         }
